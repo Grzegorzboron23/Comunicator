@@ -7,3 +7,15 @@ a {
     color: white;
     float: right;
 }
+
+
+.flex-row{
+
+
+}
+
+
+.flex-column{
+ flex-direction:column;
+
+}

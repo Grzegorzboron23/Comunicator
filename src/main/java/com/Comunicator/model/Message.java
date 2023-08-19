@@ -1,31 +1,44 @@
 package com.Comunicator.model;
 
-import jakarta.persistence.*;
-import lombok.*;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-@Builder
 @Entity
-@Table(name = "message")
+@Table(name="messages")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "message")
+    @Column(name = "message_text")
     private String message;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "message_from", nullable = false)
+    private int fromLogin;
 
-    @Column(name ="message_type")
-    private MessageType messageType;
+    @Column(name = "message_to", nullable = false)
+    private int toLogin;
 
+    @Column(name = "date_time",nullable = false)
+    private LocalDateTime dateTime;
+
+
+
+    public Message(String message, int fromLogin, int toLogin) {
+        this.message = message;
+        this.fromLogin = fromLogin;
+        this.toLogin = toLogin;
+        this.dateTime = LocalDateTime.now();
+    }
 
 }

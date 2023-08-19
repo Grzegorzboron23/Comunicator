@@ -3,13 +3,48 @@
     <meta charset="UTF-8">
     <title>Main Page</title>
     <link rel ="stylesheet" href="css/stylesMainPage.css">
+    <script src="/js/mainPage.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.2/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    
 </head>
 <body>
 
 <nav class="navbar">
-    <span>Login user: <span th:text="${loggedInUser}"></span></span>
+    <span th:text="${loggedInUser}"></span>
     <a th:href="@{/logout}">Logout</a>
+    <input type="hidden" th:value="${userId}" id="userId" name="userId">
 </nav>
+
+
+
+<div class ="flex-column">
+
+    <h1>Chat Application </h1>
+
+    <input type="text" id="messageInput" placeholder="Message">
+    <button onclick="sendMessage()">Wyślij</button>
+
+
+
+
+<!--    <form action="search-users" method="post">-->
+<!--    <label for="searchInput">Search users</label>-->
+<!--    <input type="search" id="searchInput" name="searchInput" placeholder="Search for users...">-->
+<!--    <input type="submit" value="Search"/>-->
+
+
+<!--    <ul>-->
+<!--        <li th:each="user : ${userList}" th:text="${user.name}"></li>-->
+<!--    </ul>-->
+
+    </form>
+</div>
+
+
+
+
+
 
 </body>
 </html>

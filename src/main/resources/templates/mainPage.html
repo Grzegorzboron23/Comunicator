@@ -6,7 +6,8 @@
     <script src="/js/mainPage.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.2/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
 
@@ -22,23 +23,31 @@
 
     <h1>Chat Application </h1>
 
-    <input type="text" id="messageInput" placeholder="Message">
-    <button onclick="sendMessage()">Wyślij</button>
 
 
 
 
-<!--    <form action="search-users" method="post">-->
-<!--    <label for="searchInput">Search users</label>-->
-<!--    <input type="search" id="searchInput" name="searchInput" placeholder="Search for users...">-->
-<!--    <input type="submit" value="Search"/>-->
 
 
-<!--    <ul>-->
-<!--        <li th:each="user : ${userList}" th:text="${user.name}"></li>-->
-<!--    </ul>-->
+    <label for="searchInput">Search users</label>
+    <input type="search" id="searchInput" name="searchInput" placeholder="Search for users...">
+    <button></button>
 
-    </form>
+<!--    <script>-->
+<!--$(document).ready(function() {-->
+<!--  $("#searchInput").on("input", function() {-->
+<!--    var inputValue = $(this).val();-->
+<!--    console.log("Wpisano literę: " + inputValue);-->
+<!--  });-->
+<!--});-->
+<!--</script>-->
+
+
+
+
+        <input type="text" id="messageInput" placeholder="Message">
+        <button onclick="sendMessage()">Wyślij</button>
+
 </div>
 
 

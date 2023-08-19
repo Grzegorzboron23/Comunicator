@@ -14,3 +14,14 @@
                 }));
             });
         }
+
+
+
+  $("#searchInput").on("input", function() {
+    var inputValue = $(this).val();
+    console.log("Wpisano literę: " + inputValue);
+
+
+    //TODO AJAX findUsers dynamiccly like lookup
+
+  });

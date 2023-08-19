@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
 import java.util.List;
@@ -43,6 +45,16 @@ public class MainPageController {
     public String searchUsers(HttpServletRequest request, Model model) {
         String searchInput = request.getParameter("searchInput");
         return "redirect:/mainPage?searchInput=" + searchInput;
+    }
+
+    @PostMapping("/processData")
+    @ResponseBody
+    public String processData(@RequestBody String inputValue) {
+        System.out.println("jestem w kontrolerze springa " + inputValue);
+
+
+        String processedValue = "Przetworzona wartość: " + inputValue;
+        return processedValue;
     }
 
 }

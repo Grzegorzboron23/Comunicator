@@ -3,6 +3,7 @@ package com.Comunicator.controller;
 
 import com.Comunicator.model.User;
 import com.Comunicator.respository.UserRepository;
+import com.Comunicator.service.MessageService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,12 +12,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MainPageController {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    MessageService messageService;
 
     @GetMapping("/mainPage")
     public String mainPage(HttpServletRequest request, Model model, Principal principal) {
@@ -47,13 +51,18 @@ public class MainPageController {
     @PostMapping("/processData")
     @ResponseBody
     public List<User> processData(@RequestParam String inputValue ) {
-        System.out.println("jestem w kontrolerze springa " + inputValue);
-
         if(inputValue != null) {
             List<User> userList = userRepository.findByUsernameContaining(inputValue);
             return userList;
         }
         return null;
+    }
+
+    @PostMapping("/showAllMessagesWithUser")
+    @ResponseBody
+    public List<Map<String, Object>> showAllMessagesWithUser(@RequestParam String selectedUserId, Principal principal){
+       int principalUser = Math.toIntExact(userRepository.findByName(principal.getName()).getId());
+        return messageService.getListMessage(principalUser,Integer.parseInt(selectedUserId));
     }
 
 }

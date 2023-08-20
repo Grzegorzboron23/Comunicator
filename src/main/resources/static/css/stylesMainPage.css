@@ -14,8 +14,13 @@ a {
 
 }
 
-
 .flex-column{
  flex-direction:column;
+ justify-content: center;
+ text-align: center;
 
 }
+
+.inputWidth{
+  width:200px;
+  }

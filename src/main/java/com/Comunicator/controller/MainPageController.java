@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -49,12 +46,14 @@ public class MainPageController {
 
     @PostMapping("/processData")
     @ResponseBody
-    public String processData(@RequestBody String inputValue) {
+    public List<User> processData(@RequestParam String inputValue ) {
         System.out.println("jestem w kontrolerze springa " + inputValue);
 
-
-        String processedValue = "Przetworzona wartość: " + inputValue;
-        return processedValue;
+        if(inputValue != null) {
+            List<User> userList = userRepository.findByUsernameContaining(inputValue);
+            return userList;
+        }
+        return null;
     }
 
 }

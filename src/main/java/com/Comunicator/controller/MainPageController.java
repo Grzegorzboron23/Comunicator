@@ -3,7 +3,9 @@ package com.Comunicator.controller;
 
 import com.Comunicator.Utils.ConvertData;
 import com.Comunicator.model.LastConversationWith;
+import com.Comunicator.model.Message;
 import com.Comunicator.model.User;
+import com.Comunicator.respository.MessageRepository;
 import com.Comunicator.respository.UserRepository;
 import com.Comunicator.service.MessageService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,8 +23,9 @@ public class MainPageController {
 
     @Autowired
     UserRepository userRepository;
+
     @Autowired
-    MessageService messageService;
+    MessageRepository messageRepository;
 
     @GetMapping("/mainPage")
     public String mainPage(HttpServletRequest request, Model model, Principal principal) {
@@ -62,29 +65,38 @@ public class MainPageController {
 
     @PostMapping("/showAllMessagesWithUser")
     @ResponseBody
-    public List<Map<String, Object>> showAllMessagesWithUser(@RequestParam String selectedUserId, Principal principal){
-       int principalUser = Math.toIntExact(userRepository.findByName(principal.getName()).getId());
-        return messageService.getListMessage(principalUser,Integer.parseInt(selectedUserId));
+    public List<Message> showAllMessagesWithUser(@RequestParam String selectedUserId, Principal principal){
+       User principalUser = userRepository.findByName(principal.getName());
+       User findUser = userRepository.findById(Long.valueOf(selectedUserId)).orElse(null);
+
+        List<Message> messagesFromTo = messageRepository.findAllByUserFromAndUserToOrderByDateTimeAsc(principalUser, findUser);
+        List<Message> messagesToFrom = messageRepository.findAllByUserToAndUserFromOrderByDateTimeAsc(principalUser, findUser);
+
+        List<Message> allMessages = new ArrayList<>();
+        allMessages.addAll(messagesFromTo);
+        allMessages.addAll(messagesToFrom);
+        Collections.sort(allMessages, Comparator.comparing(Message::getDateTime));
+
+        return allMessages;
     }
 
     @PostMapping("/findLastConversations")
     @ResponseBody
-    public List<LastConversationWith> findLastConversations(Principal principal){
-        Integer currentUserId = Math.toIntExact(userRepository.findByName(principal.getName()).getId());
-       Set<Integer> listOfUsersId =  messageService.getUserIdThatHaveConversationWithLoginUser(currentUserId);
+    public List<Message> findLastConversations(Principal principal){
+        User loginUser =userRepository.findByName(principal.getName());
 
-        List<LastConversationWith> lastConversationWithList = new ArrayList<>();
+        List<User> allUsersWithConversations = messageRepository.findUsersWithMessagesForUser(loginUser);
+        List<Message> lastMessages = new ArrayList<>();
 
-        for(Integer userId: listOfUsersId){
-            lastConversationWithList.add(
-                    new LastConversationWith(messageService.findLastMessage(currentUserId,userId),
-                    userRepository.findById(userId.longValue()),currentUserId,
-                    ConvertData.convertLocalDatTime(messageService.findDateOfLastMessage(currentUserId,userId)),
-            messageService.findLastSender(currentUserId,userId))
-                    );
+        for(User currentUser: allUsersWithConversations){
+            lastMessages.add(messageRepository.findLastMessageByUsers(loginUser,currentUser));
         }
 
-        return lastConversationWithList;
+
+
+
+        return lastMessages;
     }
+
 
 }

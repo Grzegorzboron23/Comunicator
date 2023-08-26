@@ -1,10 +1,12 @@
 package com.Comunicator.model;
 
 
+import com.Comunicator.respository.UserRepository;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
@@ -32,6 +34,13 @@ public class Message {
     @Column(name = "date_time",nullable = false)
     private LocalDateTime dateTime;
 
+    @ManyToOne
+    @JoinColumn(name="user_from")
+    User userFrom;
+
+    @ManyToOne
+    @JoinColumn(name="user_to")
+    User userTo;
 
 
     public Message(String message, int fromLogin, int toLogin) {
@@ -40,5 +49,7 @@ public class Message {
         this.toLogin = toLogin;
         this.dateTime = LocalDateTime.now();
     }
+
+
 
 }

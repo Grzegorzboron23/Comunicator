@@ -14,7 +14,7 @@
 
 
 <nav class="navbar">
-    <span th:text="${loggedInUser}"></span>
+    <span id="loggedUser" th:text="${loggedInUser}"></span>
     <a th:href="@{/logout}">Logout</a>
     <input type="hidden" th:value="${userId}" id="userId" name="userId">
 </nav>
@@ -34,7 +34,7 @@
 
         <div class="right-column">
 
-            <div id="messagesContainer"></div>
+            <div class="message-container" id="messagesContainer"></div>
 
             <div class="bottom-right">
                 <input class="inputMessage" type="text" id="messageInput" placeholder="Message" hidden>

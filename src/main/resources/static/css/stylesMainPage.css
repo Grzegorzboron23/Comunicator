@@ -95,4 +95,34 @@ a {
        background-color: #f2f2f2;
   }
 
+.message {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
 
+.message-row {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 0;
+}
+
+.own-message {
+    background-color: #89a9b4;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0 5px;
+    color: white;
+    text-align: right;
+}
+
+.other-message {
+    background-color: lightgreen;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0 5px;
+    color: black;
+        text-align: left;
+}

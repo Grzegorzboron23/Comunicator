@@ -1,6 +1,8 @@
 
     let chosenUserId=null;
 
+
+
 function sendMessage() {
     const message = document.getElementById("messageInput").value;
     const fromLogin = document.getElementById("userId").value;
@@ -61,9 +63,11 @@ function sendMessage() {
                         table.classList.add("lastConversationTable");
 
 
-                        response.forEach(function(item) {
-                            createTableContents(item, table);
-                        });
+                      for (var key in response) {
+                             if (response.hasOwnProperty(key)) {
+                                 createTableContents(response[key], table);
+                             }
+                         }
 
                         var container = document.getElementById("lastConversations");
                         container.innerHTML = "";
@@ -137,25 +141,38 @@ function sendMessage() {
     function createMessageContainer(messagesContainer, response){
         messagesContainer.innerHTML = "";
 
+
+
         var innerContainer = document.createElement("div");
-        innerContainer.style.display = "flex";
-        innerContainer.style.flexDirection = "column";
-        innerContainer.style.justifyContent = "center";
-        innerContainer.style.alignItems = "center";
+        innerContainer.style.width = "100%";
+
 
 
         response.forEach(function(message) {
             var messageDiv = document.createElement("div");
+            messageDiv.style.width = "100%";
             messageDiv.classList.add("message");
 
             var messageText = document.createElement("p");
-            messageText.textContent = "Message: " + message.message_text;
+            messageText.textContent = "Message: " + message.message;
 
             var messageFrom = document.createElement("p");
-            messageFrom.textContent = "Od: " + message.message_from;
+            messageFrom.textContent = "Od: " + message.fromLogin;
 
-            messageDiv.appendChild(messageText);
-            messageDiv.appendChild(messageFrom);
+            const loggedUser = document.getElementById("loggedUser").textContent;
+            console.log("test " + loggedUser + " test 2 " + message.userFrom.name);
+
+            if (loggedUser === message.userFrom.name) {
+                   messageDiv.classList.add("own-message");
+                   messageDiv.appendChild(messageText);
+                   messageDiv.appendChild(messageFrom);
+                   }
+                else {
+
+                   messageDiv.classList.add("other-message");
+                   messageDiv.appendChild(messageFrom);
+                   messageDiv.appendChild(messageText);
+               }
 
             innerContainer.appendChild(messageDiv);
         });
@@ -167,23 +184,19 @@ function sendMessage() {
     var row = table.insertRow();
     var cell = row.insertCell();
 
-     if(item.senderLastMessage.id === item.loginUserId){
+
+
+
     cell.innerHTML = `
-    <strong>${item.user.name} :</strong> <br>
-    ${item.dateTime}<br>
-     <strong>You :</strong> ${item.messageText}<br>
-    `;
-    }else{
-    cell.innerHTML = `
-         <strong>${item.user.name} :</strong> <br>
+         <strong>${item.userTo.name} :</strong> <br>
         ${item.dateTime}<br>
-        <strong>${item.senderLastMessage.name} :</strong> ${item.messageText}<br>
+        <strong>${item.userFrom.name} :</strong> ${item.message}<br>
         `;
-    }
+
 
       row.addEventListener("click", function() {
-            console.log("Kliknięto w wiersz: " + item.messageText);
-            showAllMessagesWithChosenUser(item.user.id)
+            console.log("Kliknięto w wiersz: " + item.fromLogin);
+            showAllMessagesWithChosenUser(item.toLogin)
             showInputAndButton();
         });
 

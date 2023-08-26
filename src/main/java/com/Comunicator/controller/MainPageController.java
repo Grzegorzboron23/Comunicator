@@ -1,6 +1,8 @@
 package com.Comunicator.controller;
 
 
+import com.Comunicator.Utils.ConvertData;
+import com.Comunicator.model.LastConversationWith;
 import com.Comunicator.model.User;
 import com.Comunicator.respository.UserRepository;
 import com.Comunicator.service.MessageService;
@@ -11,8 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Controller
 public class MainPageController {
@@ -63,6 +65,26 @@ public class MainPageController {
     public List<Map<String, Object>> showAllMessagesWithUser(@RequestParam String selectedUserId, Principal principal){
        int principalUser = Math.toIntExact(userRepository.findByName(principal.getName()).getId());
         return messageService.getListMessage(principalUser,Integer.parseInt(selectedUserId));
+    }
+
+    @PostMapping("/findLastConversations")
+    @ResponseBody
+    public List<LastConversationWith> findLastConversations(Principal principal){
+        Integer currentUserId = Math.toIntExact(userRepository.findByName(principal.getName()).getId());
+       Set<Integer> listOfUsersId =  messageService.getUserIdThatHaveConversationWithLoginUser(currentUserId);
+
+        List<LastConversationWith> lastConversationWithList = new ArrayList<>();
+
+        for(Integer userId: listOfUsersId){
+            lastConversationWithList.add(
+                    new LastConversationWith(messageService.findLastMessage(currentUserId,userId),
+                    userRepository.findById(userId.longValue()),currentUserId,
+                    ConvertData.convertLocalDatTime(messageService.findDateOfLastMessage(currentUserId,userId)),
+            messageService.findLastSender(currentUserId,userId))
+                    );
+        }
+
+        return lastConversationWithList;
     }
 
 }

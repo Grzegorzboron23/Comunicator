@@ -8,19 +8,91 @@ a {
     float: right;
 }
 
-
-.flex-row{
-
-
-}
-
-.flex-column{
- flex-direction:column;
- justify-content: center;
- text-align: center;
-
-}
-
-.inputWidth{
-  width:200px;
+ body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
   }
+
+  .container {
+    display: flex;
+    height: 100%;
+  }
+
+  .left-column, .right-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .left-column {
+    flex: 1;
+    background-color: lightblue;
+    border-top: 3px solid red;
+    padding: 10px;
+  }
+
+  .right-column {
+    flex: 9;
+    border-left: 3px solid red;
+    border-top: 3px solid red;
+     padding: 10px;
+  }
+
+  .center {
+    text-align: center;
+    margin: auto;
+  }
+
+
+
+    .bottom-right {
+      margin-top: auto;
+      margin-left: auto;
+      width:100%;
+
+    }
+
+
+
+  .sendButton {
+    width:10%;
+    height: 40px;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .sendButton:hover {
+    width: 120px;
+    background-color: green;
+  }
+
+  .inputMessage {
+    width: 82%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s ease;
+  }
+
+  .inputMessage:hover {
+    background-color: #f0f0f0;
+  }
+
+  .lastConversationTable{
+     border-collapse: collapse;
+        width: 100%;
+  }
+
+  .lastConversationTable th, .lastConversationTable td {
+      border-bottom: 1px solid black;
+      padding: 8px;
+      text-align: left;
+      cursor: pointer;
+  }
+  .lastConversationTable td:hover{
+       background-color: #f2f2f2;
+  }
+
+

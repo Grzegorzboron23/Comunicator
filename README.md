@@ -50,6 +50,7 @@ With these features, the internet messenger becomes a secure tool for conducting
 
 
 # Main Page 
+![MainPageComunicator](https://github.com/Grzegorzboron23/Comunicator/assets/81915391/a86bd4ce-afe7-410f-9e3e-5fced8059799)
 
 
 

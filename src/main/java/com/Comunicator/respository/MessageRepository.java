@@ -22,7 +22,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
             "WHERE (m.userFrom = :userFrom OR m.userTo = :userFrom) " +
             "AND (u = m.userFrom OR u = m.userTo)")
     List<User> findUsersWithMessagesForUser(@Param("userFrom") User userFrom);
-
     List<Message> findAllByUserFromAndUserToOrderByDateTimeAsc(User from, User to);
     List<Message> findAllByUserToAndUserFromOrderByDateTimeAsc(User to, User from);
 

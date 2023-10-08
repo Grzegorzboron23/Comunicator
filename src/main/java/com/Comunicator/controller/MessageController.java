@@ -26,22 +26,17 @@ public class MessageController {
 
     @MessageMapping("/chat/{to}")
     public void sendMessagePersonal(@DestinationVariable String to, Message message) {
-
         messageService.sendMessage(to,message);
     }
 
     @GetMapping("listmessage/{from}/{to}")
     public List<Map<String,Object>> getListMessageChat(@PathVariable("from") Integer from, @PathVariable("to") Integer to){
-
         return messageService.getListMessage(from, to);
     }
-
-
 
     @GetMapping("/fetchAllUsers/{myId}")
     public List<Map<String,Object>> fetchAll(@PathVariable("myId") String myId) {
         return userAndGroupService.fetchAll(myId);
-
     }
 
 }

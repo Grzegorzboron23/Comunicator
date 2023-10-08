@@ -19,30 +19,23 @@
     <input type="hidden" th:value="${userId}" id="userId" name="userId">
 </nav>
 
-<h1 class="center">Chat Application </h1>
+<h1 class="center" id="mainHeader">Chat Application </h1>
 
 <div class="container">
-
-    <div class ="left-column">
+    <div class="left-column">
         <h2>Search users</h2>
         <input class="inputWidth" type="search" id="searchInput" name="searchInput" placeholder="Search for users...">
         <div id="selectContainer"></div>
-
         <div id="lastConversations" class="bottom-right"></div>
     </div>
 
-
-        <div class="right-column">
-
-            <div class="message-container" id="messagesContainer"></div>
-
-            <div class="bottom-right">
-                <input class="inputMessage" type="text" id="messageInput" placeholder="Message" hidden>
-                <button class="sendButton" id="sendButton" onclick="sendMessage()" hidden>Wyślij</button>
-            </div>
-
+    <div class="right-column">
+        <div class="message-container" id="messagesContainer"></div>
+        <div class="bottom-right">
+            <input class="inputMessage" type="text" id="messageInput" placeholder="Message" hidden>
+            <button class="sendButton" id="sendButton" onclick="sendMessage()" hidden>Send</button>
         </div>
-
+    </div>
 </div>
 
 

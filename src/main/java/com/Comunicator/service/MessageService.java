@@ -31,7 +31,6 @@ public class MessageService {
         User userFrom = userRepository.getById((long) message.getFromLogin());
 
 
-
         jdbcTemplate.update("INSERT INTO messages (message_text, message_from, message_to, user_from, user_to, date_time) " +
                         "VALUES (?, ?, ?, ?, ?, current_timestamp)", message.getMessage(),
                 userFrom.getId(), Long.valueOf(to), userFrom.getId(), userTo.getId());
@@ -39,13 +38,10 @@ public class MessageService {
         simpMessagingTemplate.convertAndSend("/topic/messages/" + to, message);
     }
 
-
     public List<Map<String, Object>> getListMessage(@PathVariable("from") Integer from, @PathVariable("to") Integer to) {
         return jdbcTemplate.queryForList("SELECT * FROM messages WHERE (message_from=? and message_to=?) " +
                 "OR (message_to=? and message_from=?) ORDER BY date_time asc", from, to, from, to);
     }
-
-
 
 
 }
